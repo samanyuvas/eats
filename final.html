@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bruin Eats — for Fat</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,700&family=Playfair+Display:ital,wght@0,400;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --pink:     #f9a8c9;
+  --pink2:    #fbc8dd;
+  --pink3:    #fde8f1;
+  --pink4:    #fff0f7;
+  --peach:    #ffd6b0;
+  --lavender: #d9c4f0;
+  --lav2:     #ede0f8;
+  --mint:     #b8f0d8;
+  --yellow:   #fff0b0;
+  --cream:    #fffaf6;
+  --white:    #ffffff;
+  --ink:      #2d1f2e;
+  --muted:    #9b7fa8;
+  --border:   #f0d8e8;
+  --green:    #4caf7d;
+  --shadow:   0 4px 24px rgba(180,100,160,0.10);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  font-family: 'Nunito', sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* floating hearts */
+.hearts-bg {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  overflow: hidden;
+}
+.hf {
+  position: absolute;
+  opacity: 0.10;
+  animation: floatUp linear infinite;
+  user-select: none;
+}
+@keyframes floatUp {
+  0%   { transform: translateY(105vh) rotate(0deg); opacity: 0.10; }
+  100% { transform: translateY(-10vh) rotate(15deg); opacity: 0; }
+}
+
+.page { position: relative; z-index: 1; }
+
+/* ── HEADER ── */
+.header {
+  text-align: center;
+  padding: 3rem 1.5rem 1.8rem;
+  animation: popIn 0.7s cubic-bezier(.34,1.56,.64,1) both;
+}
+.from-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--pink), var(--lavender));
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  padding: 0.28rem 1rem;
+  border-radius: 99px;
+  margin-bottom: 0.9rem;
+}
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+.header h1 span {
+  background: linear-gradient(135deg, #e05fa0, #b06ed4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header .tagline {
+  font-size: 0.88rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+.date-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--pink3);
+  color: #c45e9a;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.28rem 0.9rem;
+  border-radius: 99px;
+  border: 1.5px solid var(--pink2);
+}
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: blink 2s infinite;
+  flex-shrink: 0;
+}
+@keyframes blink {
+  0%,100% { opacity:1; } 50% { opacity:0.3; }
+}
+
+/* ── WRAP ── */
+.wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.2rem 5rem;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 1.8rem;
+  box-shadow: var(--shadow);
+  border: 1.5px solid var(--border);
+  margin-bottom: 1.1rem;
+  animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+}
+.card-title {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.card-title::before {
+  content:'';
+  display:inline-block;
+  width:8px; height:8px;
+  border-radius:50%;
+  background: linear-gradient(135deg, var(--pink), var(--lavender));
+  flex-shrink:0;
+}
+
+
+
+/* ── GOALS ── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width:480px) { .two-col { grid-template-columns: 1fr; } }
+
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.field label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.field input {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--cream);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -moz-appearance: textfield;
+}
+.field input::-webkit-inner-spin-button,
+.field input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.field input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(249,168,201,0.15);
+}
+
+/* ── FAVS ── */
+.favs-list { display: flex; flex-direction: column; gap: 0.55rem; }
+.fav-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  background: var(--cream);
+  transition: all 0.18s;
+}
+.fav-row.on { border-color: var(--pink); background: var(--pink3); }
+.fav-name { font-weight: 700; font-size: 0.88rem; }
+.fav-sub  { font-size: 0.7rem; color: var(--muted); margin-top: 0.1rem; }
+.fav-nums { font-size: 0.7rem; color: var(--muted); white-space: nowrap; font-weight: 700; }
+.fav-nums b { color: #c45e9a; }
+
+.toggle {
+  width: 36px; height: 20px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  background: #e0d0ea;
+  transition: background 0.2s;
+  outline: none;
+  flex-shrink: 0;
+}
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  background: white;
+  border-radius: 50%;
+  top: 3px; left: 3px;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+}
+.toggle.on { background: linear-gradient(135deg, var(--pink), #d45fa0); }
+.toggle.on::after { transform: translateX(16px); }
+
+.del {
+  background: none; border: none;
+  cursor: pointer; color: #e0c8d8;
+  font-size: 1.1rem; padding: 0 0.1rem;
+  transition: color 0.15s;
+}
+.del:hover { color: #e05080; }
+
+/* add fav */
+.add-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px dashed var(--border);
+}
+.add-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--pink);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.7rem;
+}
+.add-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 0.6rem;
+  align-items: end;
+}
+@media (max-width:540px) {
+  .add-grid { grid-template-columns: 1fr 1fr; }
+  .add-grid .btn-sm { grid-column: span 2; }
+}
+
+/* ── DINING CHIPS ── */
+.chip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.55rem;
+}
+.chip {
+  padding: 0.6rem 0.75rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--cream);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.18s;
+  line-height: 1.3;
+  user-select: none;
+}
+.chip:hover { border-color: var(--pink2); color: var(--ink); }
+.chip.on { border-color: var(--pink); background: var(--pink3); color: #c45e9a; }
+.chip-sub { font-size: 0.62rem; display: block; opacity: 0.7; margin-top: 0.1rem; font-weight: 600; }
+
+/* ── GENERATE BTN ── */
+.btn-gen {
+  width: 100%;
+  padding: 1.1rem;
+  border: none;
+  border-radius: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  background: linear-gradient(135deg, #f07ab8, #a855d4);
+  color: white;
+  box-shadow: 0 6px 24px rgba(200,80,160,0.35);
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+  margin-top: 0.4rem;
+}
+.btn-gen:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(200,80,160,0.42); }
+.btn-gen:active:not(:disabled) { transform: scale(0.99); }
+.btn-gen:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ── LOADING ── */
+.loading-screen {
+  display: none;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  animation: popIn 0.4s ease both;
+}
+.loading-screen.on { display: block; }
+
+.loading-heart {
+  font-size: 2.8rem;
+  animation: heartbeat 0.75s ease-in-out infinite;
+  display: inline-block;
+}
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+.loading-steps {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.step {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+  padding: 0.5rem 1rem;
+  border-radius: 99px;
+  background: var(--pink3);
+  transition: all 0.3s;
+  border: 1.5px solid transparent;
+}
+.step.active { color: #c45e9a; border-color: var(--pink2); background: var(--pink4); }
+.step.done   { color: var(--green); background: #e8f8ef; border-color: #b8e8cc; }
+
+/* ── RESULTS ── */
+#results { display: none; }
+#results.on { display: block; }
+
+/* stats */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 0.8rem;
+  margin-bottom: 1.1rem;
+}
+.stat {
+  background: var(--white);
+  border-radius: 18px;
+  padding: 1.2rem 0.8rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1.5px solid var(--border);
+  animation: popIn 0.4s cubic-bezier(.34,1.56,.64,1) both;
+}
+.sv {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-style: italic;
+  color: var(--ink);
+  line-height: 1;
+}
+.sv.accent { color: #c45e9a; }
+.sl {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+/* progress */
+.prog-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 1.5rem 1.8rem;
+  box-shadow: var(--shadow);
+  border: 1.5px solid var(--border);
+  margin-bottom: 1.1rem;
+}
+.prog-row { margin-bottom: 0.85rem; }
+.prog-row:last-child { margin-bottom:0; }
+.prog-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 0.42rem;
+}
+.prog-top span:last-child { color: var(--ink); }
+.track { height: 10px; background: var(--pink3); border-radius: 99px; overflow: hidden; }
+.fill {
+  height: 100%;
+  border-radius: 99px;
+  width: 0%;
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+}
+.fill.pro { background: linear-gradient(90deg, #f07ab8, #d45fa0); }
+.fill.cal { background: linear-gradient(90deg, #f0c07a, #d4955f); }
+
+/* AI insight */
+.ai-insight {
+  background: linear-gradient(135deg, var(--lav2), var(--pink3));
+  border: 1.5px solid var(--lavender);
+  border-radius: 20px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 1.1rem;
+  animation: popIn 0.5s cubic-bezier(.34,1.56,.64,1) both;
+}
+.ai-insight-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #9060c0;
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.ai-insight-text {
+  font-size: 0.88rem;
+  color: var(--ink);
+  line-height: 1.65;
+  font-weight: 400;
+}
+
+/* meal sections */
+.meal-block { margin-bottom: 0.3rem; }
+.meal-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.5rem 0 0.65rem;
+}
+.mhdot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.mhdot.b { background: var(--yellow);  border: 2px solid #d4b840; }
+.mhdot.l { background: var(--mint);    border: 2px solid #50b870; }
+.mhdot.d { background: var(--lavender);border: 2px solid #9060c0; }
+.mhdot.s { background: var(--pink);    border: 2px solid #d45fa0; }
+.mhlabel {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.food-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.8rem;
+  align-items: center;
+  animation: slideIn 0.35s ease both;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.food-card:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(180,100,160,0.1); }
+.food-card.fav { background: var(--pink3); border-color: var(--pink); }
+
+.fname { font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.35rem; }
+.fheart { color: #e05890; font-size: 0.75rem; }
+.fwhere { font-size: 0.72rem; color: var(--muted); margin-top: 0.15rem; font-weight: 600; }
+.freason { font-size: 0.7rem; color: #9060c0; margin-top: 0.15rem; font-style: italic; }
+
+.fnums { text-align: right; flex-shrink: 0; }
+.fcal { font-weight: 700; font-size: 0.9rem; }
+.fpro { font-size: 0.72rem; color: #c45e9a; font-weight: 700; margin-top: 0.1rem; }
+.feff { font-size: 0.63rem; color: var(--muted); }
+
+/* footer */
+.love-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1.8rem;
+  background: linear-gradient(135deg, var(--pink3), var(--lav2));
+  border-radius: 24px;
+  border: 1.5px solid var(--pink2);
+}
+.love-footer p {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: #c45e9a;
+  line-height: 1.65;
+}
+.love-footer .sig { font-size: 0.73rem; color: var(--muted); margin-top: 0.5rem; font-style: normal; font-weight: 700; }
+
+.btn-reset {
+  display: block;
+  margin: 1.2rem auto 0;
+  padding: 0.5rem 1.5rem;
+  border: 2px solid var(--pink2);
+  border-radius: 99px;
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.06em;
+}
+.btn-reset:hover { border-color: var(--pink); color: #c45e9a; }
+
+.note { font-size: 0.76rem; color: var(--muted); text-align: center; font-style: italic; margin-top: 0.9rem; line-height: 1.6; }
+
+@keyframes popIn {
+  from { opacity:0; transform: scale(0.92) translateY(10px); }
+  to   { opacity:1; transform: scale(1) translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity:0; transform: translateX(-8px); }
+  to   { opacity:1; transform: translateX(0); }
+}
+
+/* error box */
+.err-box {
+  background: #fde8e8;
+  border: 1.5px solid #f0b8b8;
+  border-radius: 16px;
+  padding: 1.2rem 1.5rem;
+  font-size: 0.85rem;
+  color: #c0392b;
+  font-weight: 600;
+  display: none;
+  margin-top: 1rem;
+}
+.err-box.on { display: block; }
+</style>
+</head>
+<body>
+
+<!-- bg hearts -->
+<div class="hearts-bg" id="hbg"></div>
+
+<div class="page">
+
+<header class="header">
+  <div class="from-tag">made with love</div>
+  <h1>Bruin <span>Eats</span></h1>
+  <p class="tagline">eat smart, feel good, stay cute</p>
+  <div class="date-chip">
+    <div class="live-dot"></div>
+    <span id="dateLabel">Loading...</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- GOALS -->
+  <div class="card" style="animation-delay:0.08s">
+    <div class="card-title">Today's Goals</div>
+    <div class="two-col">
+      <div class="field">
+        <label>Calorie Budget</label>
+        <input type="number" id="calGoal" placeholder="e.g. 1800">
+      </div>
+      <div class="field">
+        <label>Protein Goal (g)</label>
+        <input type="number" id="proGoal" placeholder="e.g. 120">
+      </div>
+    </div>
+  </div>
+
+  <!-- MUST-HAVES -->
+  <div class="card" style="animation-delay:0.12s">
+    <div class="card-title">Must-Haves (Michelle's Faves)</div>
+    <div class="favs-list" id="favsList"></div>
+    <div class="add-section">
+      <div class="add-label">+ Add a must-have</div>
+      <div class="add-grid">
+        <div class="field">
+          <label>Name</label>
+          <input type="text" id="nName" placeholder="e.g. Matcha Latte">
+        </div>
+        <div class="field">
+          <label>Calories</label>
+          <input type="number" id="nCal" placeholder="240">
+        </div>
+        <div class="field">
+          <label>Protein (g)</label>
+          <input type="number" id="nPro" placeholder="4">
+        </div>
+        <button class="btn-sm" onclick="addFav()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DINING HALLS -->
+  <div class="card" style="animation-delay:0.16s">
+    <div class="card-title">Dining Locations</div>
+    <div class="chip-grid" id="chipGrid"></div>
+  </div>
+
+  <div class="err-box" id="errBox"></div>
+
+  <button class="btn-gen" id="genBtn" onclick="generate()">
+    Ask AI to Build My Day 💕
+  </button>
+
+  <!-- LOADING -->
+  <div class="loading-screen" id="loader">
+    <div class="loading-heart">💗</div>
+    <div class="loading-steps" id="steps"></div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+
+    <div style="height:1.6rem"></div>
+
+    <div class="stats-row">
+      <div class="stat" style="animation-delay:0s">
+        <div class="sv" id="sCal">—</div>
+        <div class="sl">Calories</div>
+      </div>
+      <div class="stat" style="animation-delay:0.06s">
+        <div class="sv accent" id="sPro">—</div>
+        <div class="sl">Protein (g)</div>
+      </div>
+      <div class="stat" style="animation-delay:0.12s">
+        <div class="sv" id="sEff">—</div>
+        <div class="sl">g prot/100kcal</div>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-row">
+        <div class="prog-top"><span>Protein</span><span id="proLabel"></span></div>
+        <div class="track"><div class="fill pro" id="proFill"></div></div>
+      </div>
+      <div class="prog-row">
+        <div class="prog-top"><span>Calories</span><span id="calLabel"></span></div>
+        <div class="track"><div class="fill cal" id="calFill"></div></div>
+      </div>
+    </div>
+
+    <div class="ai-insight" id="aiInsight" style="display:none">
+      <div class="ai-insight-label">✦ AI Note for Michelle</div>
+      <div class="ai-insight-text" id="aiInsightText"></div>
+    </div>
+
+    <div id="mealOut"></div>
+
+    <div class="love-footer">
+      <p>"You don't have to think about it — just eat the plan and be your beautiful self."</p>
+      <div class="sig">made for Fat, with love 💗</div>
+    </div>
+
+    <p class="note">Nutrition estimates are approximate and may vary by prep and portion. Drink lots of water!</p>
+
+    <button class="btn-reset" onclick="resetAll()">Start Over</button>
+  </div>
+
+</div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+//  FLOATING HEARTS
+// ═══════════════════════════════════════
+const hbg = document.getElementById('hbg');
+['♡','♥','˚','✿','·'].forEach((c,i) => {
+  for(let j=0;j<4;j++){
+    const d = document.createElement('div');
+    d.className='hf';
+    d.textContent=c;
+    d.style.cssText=`left:${Math.random()*100}%;font-size:${0.7+Math.random()*0.9}rem;animation-duration:${13+Math.random()*14}s;animation-delay:${Math.random()*14}s`;
+    hbg.appendChild(d);
+  }
+});
+
+// ═══════════════════════════════════════
+//  DATE
+// ═══════════════════════════════════════
+const TODAY = new Date();
+document.getElementById('dateLabel').textContent =
+  TODAY.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+const API_DATE = TODAY.toISOString().slice(0,10);
+
+// API key (set by site owner)
+const apiKey = 'sk-ant-api03-IA1kHWBtITQNZlAyypaiLcXfLqiZlnpVBhy1XLPA0A2zCaD2ZgZ_qFhylVB3Q9NFvtVUU6e8G5Wbbe9DP50S8A-iRN4UgAA';
+
+// ═══════════════════════════════════════
+//  DINING HALLS
+// ═══════════════════════════════════════
+const HALLS = [
+  {id:8,  name:'The Study',       sub:'Hedrick · Takeout',   priority:3},
+  {id:13, name:'Rendezvous',      sub:'Takeout',             priority:3},
+  {id:10, name:'Bruin Café',      sub:'Takeout',             priority:3},
+  {id:14, name:'The Drey',        sub:'Takeout',             priority:3},
+  {id:9,  name:'Epic @ Ackerman', sub:'Takeout',             priority:2},
+  {id:4,  name:'De Neve',         sub:'Dining Hall',         priority:2},
+  {id:5,  name:'Bruin Plate',     sub:'Dining Hall',         priority:2},
+  {id:3,  name:'Epicuria',        sub:'Covel',               priority:2},
+  {id:12, name:'Feast @ Rieber',  sub:'Dining Hall',         priority:1},
+  {id:16, name:'Café 1919',       sub:'Dining Hall',         priority:1},
+  {id:20, name:'Bruin Bowl',      sub:'Dining Hall',         priority:1},
+];
+
+let activeHalls = new Set([8,13,10,14,9]);
+
+function renderChips(){
+  const g = document.getElementById('chipGrid');
+  g.innerHTML='';
+  HALLS.forEach(h=>{
+    const c=document.createElement('div');
+    c.className='chip'+(activeHalls.has(h.id)?' on':'');
+    c.innerHTML=`${h.name}<span class="chip-sub">${h.sub}</span>`;
+    c.onclick=()=>{ activeHalls.has(h.id)?activeHalls.delete(h.id):activeHalls.add(h.id); renderChips(); };
+    g.appendChild(c);
+  });
+}
+renderChips();
+
+// ═══════════════════════════════════════
+//  FAVORITES
+// ═══════════════════════════════════════
+let favs = [
+  {id:'f1',name:'ShareTea Boba',   sub:'Mango Passionfruit Green Tea, 50% sweet, light ice + boba', cal:340,pro:2, on:true},
+  {id:'f2',name:'Brookside Chocolate',sub:'Dark Choc Raspberry & Goji, ~1oz',                      cal:130,pro:1, on:true},
+  {id:'f3',name:'Brie Cheese',     sub:'1oz serving',                                              cal:95, pro:6, on:true},
+  {id:'f4',name:'Plain Bagel + Cream Cheese',sub:'Alfred Coffee',                                  cal:390,pro:12,on:true},
+];
+let fid=100;
+
+function renderFavs(){
+  const el=document.getElementById('favsList');
+  el.innerHTML='';
+  if(!favs.length){
+    el.innerHTML='<div style="font-size:0.8rem;color:var(--muted);font-style:italic">No must-haves yet — add some below!</div>';
+    return;
+  }
+  favs.forEach(f=>{
+    const r=document.createElement('div');
+    r.className='fav-row'+(f.on?' on':'');
+    r.innerHTML=`
+      <div>
+        <div class="fav-name">${f.name}</div>
+        ${f.sub?`<div class="fav-sub">${f.sub}</div>`:''}
+      </div>
+      <div class="fav-nums">${f.cal} kcal &nbsp;|&nbsp; <b>${f.pro}g</b></div>
+      <button class="toggle ${f.on?'on':''}" onclick="togFav('${f.id}')"></button>
+      <button class="del" onclick="delFav('${f.id}')">×</button>
+    `;
+    el.appendChild(r);
+  });
+}
+
+function togFav(id){ const f=favs.find(x=>x.id===id); if(f){f.on=!f.on;renderFavs();} }
+function delFav(id){ favs=favs.filter(x=>x.id!==id); renderFavs(); }
+
+function addFav(){
+  const name=document.getElementById('nName').value.trim();
+  const cal=parseInt(document.getElementById('nCal').value)||0;
+  const pro=parseInt(document.getElementById('nPro').value)||0;
+  if(!name||cal<=0){alert('Please enter a name and calories!');return;}
+  favs.push({id:'c'+(fid++),name,cal,pro,on:true});
+  document.getElementById('nName').value='';
+  document.getElementById('nCal').value='';
+  document.getElementById('nPro').value='';
+  renderFavs();
+}
+
+renderFavs();
+
+// ═══════════════════════════════════════
+//  FETCH UCLA MENUS
+// ═══════════════════════════════════════
+const CORS = 'https://corsproxy.io/?';
+
+async function fetchMenu(hall){
+  const url=`https://uclamenu.vercel.app/dining-hall/${hall.id}?date=${API_DATE}`;
+  try{
+    const r=await fetch(CORS+encodeURIComponent(url),{signal:AbortSignal.timeout(8000)});
+    if(!r.ok) throw new Error('bad response');
+    const html=await r.text();
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    const items=new Set();
+    doc.querySelectorAll('li').forEach(li=>{
+      const t=li.textContent.trim();
+      if(t.length>3&&t.length<100) items.add(t);
+    });
+    // also grab any direct text content
+    const txt=doc.body?.innerText||'';
+    txt.split('\n').map(l=>l.trim()).filter(l=>
+      l.length>4&&l.length<90&&
+      !l.match(/^(Breakfast|Lunch|Dinner|Take Out|UCLA|Back|View|Last|Stations?|Menu|©|\d)/i)
+    ).forEach(l=>items.add(l));
+
+    return {name:hall.name,items:[...items].slice(0,50)};
+  } catch(e){
+    return {name:hall.name,items:[],err:true};
+  }
+}
+
+function cleanName(s){
+  return s.replace(/^[A-Z][a-z]{0,3}\s+/,'')
+          .replace(/^(Spr|Dn|Cv|Rend|Hd|Bc|Uclub|Gf|Bak|Comm|1919|Bbwl|Sb|Drey)\s+/i,'')
+          .trim();
+}
+
+// ═══════════════════════════════════════
+//  CALL CLAUDE API
+// ═══════════════════════════════════════
+async function callClaude(prompt){
+  const res = await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version':'2023-06-01',
+      'anthropic-dangerous-direct-browser-access':'true',
+    },
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:2000,
+      messages:[{role:'user',content:prompt}]
+    })
+  });
+  if(!res.ok){
+    const e=await res.json().catch(()=>({}));
+    throw new Error(e?.error?.message||`API error ${res.status}`);
+  }
+  const data=await res.json();
+  return data.content.map(b=>b.text||'').join('');
+}
+
+// ═══════════════════════════════════════
+//  LOADING UI
+// ═══════════════════════════════════════
+const STEP_MSGS = [
+  'Fetching today\'s UCLA menus...',
+  'Reading what\'s being served...',
+  'Asking AI to pick the best foods for Fat...',
+  'Calculating macros & protein...',
+  'Building your perfect day...',
+];
+
+let stepEls=[];
+function initSteps(){
+  const el=document.getElementById('steps');
+  el.innerHTML='';
+  stepEls=[];
+  STEP_MSGS.forEach(msg=>{
+    const d=document.createElement('div');
+    d.className='step';
+    d.textContent=msg;
+    el.appendChild(d);
+    stepEls.push(d);
+  });
+}
+
+function setStep(i){
+  stepEls.forEach((el,j)=>{
+    el.className='step'+(j<i?' done':j===i?' active':'');
+  });
+}
+
+// ═══════════════════════════════════════
+//  MAIN GENERATE
+// ═══════════════════════════════════════
+async function generate(){
+  const calGoal=parseInt(document.getElementById('calGoal').value)||1800;
+  const proGoal=parseInt(document.getElementById('proGoal').value)||120;
+
+  if(activeHalls.size===0){ showErr('Select at least one dining location!'); return; }
+
+  hideErr();
+  document.getElementById('results').classList.remove('on');
+  document.getElementById('loader').classList.add('on');
+  document.getElementById('genBtn').disabled=true;
+  initSteps();
+  setStep(0);
+
+  try{
+    // Step 1-2: Fetch menus
+    const selectedHalls=HALLS.filter(h=>activeHalls.has(h.id));
+    const menuResults=await Promise.all(selectedHalls.map(h=>fetchMenu(h)));
+    setStep(2);
+
+    // Build menu text for Claude
+    let menuText='';
+    menuResults.forEach((m,i)=>{
+      if(!m.items.length) return;
+      menuText+=`\n### ${m.name}\n`;
+      m.items.map(cleanName).filter(Boolean).slice(0,30).forEach(item=>{
+        menuText+=`- ${item}\n`;
+      });
+    });
+
+    if(!menuText.trim()){
+      menuText='Menu data unavailable today. Use your knowledge of typical UCLA dining hall offerings.';
+    }
+
+    // Build favorites text
+    const activeFavs=favs.filter(f=>f.on);
+    const favText = activeFavs.length
+      ? activeFavs.map(f=>`- ${f.name} (${f.cal} kcal, ${f.pro}g protein) — ${f.sub||''}`).join('\n')
+      : 'None';
+
+    setStep(3);
+
+    // Step 3: Ask Claude
+    const prompt=`You are a nutrition assistant helping a UCLA student named Michelle (nickname "Fat", said with love by her boyfriend).
+
+Today is ${TODAY.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})}.
+
+Michelle's goals today:
+- Calorie budget: ${calGoal} kcal
+- Protein goal: ${proGoal}g
+
+Her must-have items (already included, do NOT add again):
+${favText}
+
+Must-have totals already counted: ${activeFavs.reduce((a,f)=>a+f.cal,0)} kcal, ${activeFavs.reduce((a,f)=>a+f.pro,0)}g protein.
+Remaining budget: ${calGoal - activeFavs.reduce((a,f)=>a+f.cal,0)} kcal, ${proGoal - activeFavs.reduce((a,f)=>a+f.pro,0)}g protein needed.
+
+Today's available menus at UCLA dining:
+${menuText}
+
+Your task:
+1. Select the MOST OPTIMIZED combination of foods from today's menus that:
+   - Fits within the remaining calorie budget
+   - Maximizes protein per calorie (highest protein efficiency)
+   - Still tastes good and is satisfying (not just plain chicken and rice)
+   - Includes variety across breakfast, lunch, and dinner
+   - Prioritizes takeout locations (The Study, Rendezvous, Bruin Café, The Drey) over sit-down halls
+2. For each item, estimate realistic calories and protein based on the food name
+3. Write a short sweet note to Michelle (2-3 sentences, warm and encouraging, mention her nickname "Fat" affectionately once)
+
+Respond ONLY in this exact JSON format (no markdown, no backticks, no explanation outside JSON):
+{
+  "note": "Short sweet message to Michelle",
+  "meals": {
+    "breakfast": [
+      {"name": "food name", "where": "dining location", "cal": 000, "pro": 00, "reason": "why this is great for her goals"}
+    ],
+    "lunch": [...],
+    "dinner": [...],
+    "snack": [...]
+  }
+}`;
+
+    setStep(4);
+    const rawResponse = await callClaude(prompt);
+
+    // Parse JSON
+    let parsed;
+    try{
+      const clean = rawResponse.replace(/```json|```/g,'').trim();
+      parsed = JSON.parse(clean);
+    } catch(e){
+      // Try to extract JSON from response
+      const match = rawResponse.match(/\{[\s\S]*\}/);
+      if(match) parsed = JSON.parse(match[0]);
+      else throw new Error('Could not parse AI response. Please try again.');
+    }
+
+    setStep(5);
+
+    document.getElementById('loader').classList.remove('on');
+    renderResults(parsed, activeFavs, calGoal, proGoal);
+
+  } catch(err){
+    document.getElementById('loader').classList.remove('on');
+    showErr('Something went wrong: ' + err.message);
+    console.error(err);
+  } finally {
+    document.getElementById('genBtn').disabled=false;
+  }
+}
+
+// ═══════════════════════════════════════
+//  RENDER RESULTS
+// ═══════════════════════════════════════
+function renderResults(data, activeFavs, calGoal, proGoal){
+  // Merge favs into meals
+  const plan = {
+    breakfast: [...(data.meals?.breakfast||[])],
+    lunch:     [...(data.meals?.lunch||[])],
+    dinner:    [...(data.meals?.dinner||[])],
+    snack:     [...(data.meals?.snack||[])],
+  };
+
+  // Slot favs
+  activeFavs.forEach(f=>{
+    const isSnack=['boba','chocolate','brie'].some(k=>f.name.toLowerCase().includes(k));
+    const isBfast=f.name.toLowerCase().includes('bagel')||f.name.toLowerCase().includes('coffee');
+    const meal=isSnack?'snack':isBfast?'breakfast':'snack';
+    plan[meal].unshift({name:f.name,where:f.sub||'',cal:f.cal,pro:f.pro,reason:'Your must-have fave!',_fav:true});
+  });
+
+  // Totals
+  let totalCal=0, totalPro=0;
+  Object.values(plan).forEach(items=>items.forEach(f=>{totalCal+=f.cal||0;totalPro+=f.pro||0;}));
+
+  document.getElementById('sCal').textContent=totalCal;
+  document.getElementById('sPro').textContent=totalPro+'g';
+  document.getElementById('sEff').textContent=(totalPro/totalCal*100).toFixed(1);
+
+  const proPct=Math.min(100,Math.round(totalPro/proGoal*100));
+  const calPct=Math.min(100,Math.round(totalCal/calGoal*100));
+  document.getElementById('proLabel').textContent=`${totalPro}g / ${proGoal}g · ${proPct}%`;
+  document.getElementById('calLabel').textContent=`${totalCal} / ${calGoal} kcal · ${calPct}%`;
+
+  document.getElementById('results').classList.add('on');
+
+  setTimeout(()=>{
+    document.getElementById('proFill').style.width=proPct+'%';
+    document.getElementById('calFill').style.width=calPct+'%';
+  },100);
+
+  // AI note
+  if(data.note){
+    document.getElementById('aiInsightText').textContent=data.note;
+    document.getElementById('aiInsight').style.display='block';
+  }
+
+  // Meals
+  const out=document.getElementById('mealOut');
+  out.innerHTML='';
+
+  const sections=[
+    {key:'breakfast',label:'Breakfast',dot:'b'},
+    {key:'lunch',    label:'Lunch',    dot:'l'},
+    {key:'dinner',   label:'Dinner',   dot:'d'},
+    {key:'snack',    label:'Snacks & Treats', dot:'s'},
+  ];
+
+  sections.forEach(({key,label,dot},si)=>{
+    const items=plan[key];
+    if(!items.length) return;
+    const block=document.createElement('div');
+    block.className='meal-block';
+    block.innerHTML=`<div class="meal-head"><div class="mhdot ${dot}"></div><div class="mhlabel">${label}</div></div>`;
+    items.forEach((f,i)=>{
+      const eff=f.cal>0?(f.pro/f.cal*100).toFixed(1):'—';
+      const card=document.createElement('div');
+      card.className='food-card'+(f._fav?' fav':'');
+      card.style.animationDelay=(si*0.06+i*0.05)+'s';
+      card.innerHTML=`
+        <div>
+          <div class="fname">
+            ${f._fav?'<span class="fheart">♥</span>':''}
+            ${f.name}
+          </div>
+          <div class="fwhere">${f.where||''}</div>
+          ${f.reason&&!f._fav?`<div class="freason">${f.reason}</div>`:''}
+        </div>
+        <div class="fnums">
+          <div class="fcal">${f.cal} kcal</div>
+          <div class="fpro">${f.pro}g protein</div>
+          <div class="feff">${eff}g / 100 kcal</div>
+        </div>
+      `;
+      block.appendChild(card);
+    });
+    out.appendChild(block);
+  });
+
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ═══════════════════════════════════════
+//  ERROR
+// ═══════════════════════════════════════
+function showErr(msg){ const e=document.getElementById('errBox'); e.textContent=msg; e.classList.add('on'); }
+function hideErr(){ document.getElementById('errBox').classList.remove('on'); }
+
+// ═══════════════════════════════════════
+//  RESET
+// ═══════════════════════════════════════
+function resetAll(){
+  document.getElementById('results').classList.remove('on');
+  document.getElementById('aiInsight').style.display='none';
+  document.getElementById('proFill').style.width='0%';
+  document.getElementById('calFill').style.width='0%';
+  document.getElementById('calGoal').value='';
+  document.getElementById('proGoal').value='';
+  hideErr();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
